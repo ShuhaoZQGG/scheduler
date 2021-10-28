@@ -1,17 +1,19 @@
-import React from "react";
+import React, {Fragment} from "react";
 import Header from "./Header"
 import Empty from "./Empty";
 import Show from "./Show";
 import Confirm from "./Confirm";
 import Status from "./Status";
 import Error from "./Error";
+import Form from "./Form";
 
 import "./style.scss";
 
 export default function Appointment (props) {
   return (
     <article className="appointment">
-    {props.time ? <h5>Appointment at {props.time}</h5> : <h5>No Appointments</h5>}
+    <Header time = {props.time}/>
+    {props.interview ?  <Show student = {props.interview.student} interviewer = {props.interview.interviewer}/> : <Empty />}
     </article>
 
   )

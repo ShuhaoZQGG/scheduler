@@ -10,7 +10,10 @@ export default function InterviewerList(props) {
         name = {eachInterviewer.name}
         avatar = {eachInterviewer.avatar}
         selected = {eachInterviewer.id === value}
-        setInterviewer = {() => onChange(eachInterviewer.id)}
+        setInterviewer = {() => {
+          console.log("hello");
+          onChange(eachInterviewer.id)
+          }}
       />
   )
   return (
