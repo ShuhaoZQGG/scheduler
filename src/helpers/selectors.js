@@ -14,3 +14,11 @@ export default function getAppointmentsForDay(state, day) {
   }
   return filteredAppointments;
 }
+
+export default function getInterview(state, interview) {
+  if (!interview) return null;
+  let filteredInterview = {}
+  filteredInterview.student = interview.student
+  filteredInterview.interviewer = state.interviewers[interview.interviewer];
+  return filteredInterview;
+}
