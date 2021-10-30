@@ -11,7 +11,6 @@ export default function InterviewerList(props) {
         avatar = {eachInterviewer.avatar}
         selected = {eachInterviewer.id === value}
         setInterviewer = {() => {
-          console.log("hello");
           onChange(eachInterviewer.id)
           }}
       />
