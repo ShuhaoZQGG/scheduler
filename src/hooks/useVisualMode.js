@@ -28,9 +28,3 @@ export default function useVisualMode(initial) {
 
   return { mode, transition, back };
 }
-
-// function transition() {
-//   function action() {}
-
-//   return { action };
-// }
