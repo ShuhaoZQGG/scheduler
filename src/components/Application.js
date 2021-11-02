@@ -66,9 +66,9 @@ export default function Application(props) {
            setState({...state, appointments});
            console.log(res);
          })
-         .catch((err) => {
-           console.log(err);
-          });
+        //  .catch((err) => {
+        //    console.log(err);
+        //   });
   }
 
   function cancelInterview(id, interview) {
@@ -89,9 +89,9 @@ export default function Application(props) {
            setState({...state, appointments});
            console.log(res);
          })
-         .catch((err) => {
-           console.log(err);
-          });
+        //  .catch((err) => {
+        //    console.log(err);
+        //   });
   }
 
     return (
