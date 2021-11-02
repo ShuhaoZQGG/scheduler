@@ -21,3 +21,9 @@ npm test
 ```sh
 npm run storybook
 ```
+
+## Running CyPress ##
+- https://sourceforge.net/projects/vcxsrv/
+- https://drive.google.com/file/d/1xfaeGpQcF9sPAIUTMtFdAhUUryNDQ1tl/view
+- Download, install and run from the above links
+- Add the files to exceptions in firewall
