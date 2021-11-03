@@ -46,6 +46,7 @@
     "cypress": "^8.7.0",
     "cypress-mouse-position": "^1.0.0",
     "node-sass": "^4.14.0",
+    "prop-types": "^15.7.2",
     "react-test-renderer": "^16.14.0"
   },
   "jest": {
