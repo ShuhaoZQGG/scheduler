@@ -1,17 +1,12 @@
-import React, { useEffect, useReducer } from "react";
+/* This is the useApplicationData hook written by using useState,
+   It is updated to useReducer in the newest file
+
+import React, {useState, useEffect} from "react";
 import axios from "axios";
-import { actions } from "@storybook/addon-actions";
-
-const SET_DAY = "SET_DAY";
-
-  const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
-  const SET_INTERVIEW = "SET_INTERVIEW";
-  const SET_SPOTS = "SET_SPOTS";
 
 // Custom Hook to handle the states for scheduled interview
 export default function useApplicationData() {
-  
-  const [state, dispatch] = useReducer(reducer, {
+  const [state, setState] = useState({
     day: "Monday",
     days: [],
     // you may put the line below, but will have to remove/comment hardcoded appointments variable
@@ -19,41 +14,18 @@ export default function useApplicationData() {
     interviewers: {}
   });
 
+  const setDay = day => setState({ ...state, day });
   
-  // reducer function used for useReducer
-  function reducer(state, action) {
-    switch (action.type) {
-      case SET_DAY:
-        return { ...state, day: action.day }
-      case SET_APPLICATION_DATA:
-        return { ...state, days: action.days, appointments: action.appointments, interviewers: action.interviewers }
-      case SET_INTERVIEW: {
-        console.log(action)
-        return { ...state, id: action.id, interview: action.interiew }
-      }
-      case SET_SPOTS: {
-        return {...state, appointments: action.appointments, days: action.days}
-      }
-      default:
-        throw new Error(
-          `Tried to reduce with unsupported action type: ${action.type}`
-        );
-    }
-  }
   
-  const setDay = day => dispatch({ type: SET_DAY, day });
-
   useEffect(() => {
     Promise.all([
       axios.get("http://localhost:8001/api/days"),
       axios.get("http://localhost:8001/api/appointments"),
       axios.get("http://localhost:8001/api/interviewers")
     ]).then((all) => {
+      // console.log(all)
       setDay(state.day);
-      const days = all[0].data;
-      const appointments = all[1].data;
-      const interviewers = all[2].data;
-      dispatch({type: SET_APPLICATION_DATA, days, appointments, interviewers})
+      setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}));
     }) 
     
   }, [])
@@ -89,14 +61,17 @@ export default function useApplicationData() {
       [id]: appointment
     };
 
-    dispatch({ type: SET_INTERVIEW, id, interview });
+    setState({...state, appointments});
 
     //Update the API:id and setState
     return axios.put(`http://localhost:8001/api/appointments/${id}`, appointments[id])
          .then((res) => {
-           dispatch({type: SET_SPOTS, appointments, days: spotsRemaininig(appointments)})
+           setState({...state, appointments, days: spotsRemaininig(appointments)});
            console.log(res);
          })
+        //  .catch((err) => {
+        //    console.log(err);
+        //   });
   }
 
   function cancelInterview(id, interview) {
@@ -112,14 +87,15 @@ export default function useApplicationData() {
       [id]: appointment,
     };
     
-    dispatch({ type: SET_INTERVIEW, id, interview: null });
-
     //Delete the API:id (set appointments.interview to be null) and setState
     return axios.delete(`http://localhost:8001/api/appointments/${id}`)
          .then((res) => {
-          dispatch({type: SET_SPOTS, appointments, days: spotsRemaininig(appointments)})
+           setState({...state, appointments, days: spotsRemaininig(appointments)});
            console.log(res);
          })
+        //  .catch((err) => {
+        //    console.log(err);
+        //   });
   }
 
   return {
@@ -129,3 +105,4 @@ export default function useApplicationData() {
     cancelInterview
   }
 }
+*/
