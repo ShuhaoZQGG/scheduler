@@ -1,5 +1,7 @@
 # Interview Scheduler
 
+[scheduler](https://github.com/ShuhaoZQGG/scheduler/blob/master/public/images/gif-container/scheduler-flow.gif)
+
 ## Setup
 
 Install dependencies with `npm install`.
