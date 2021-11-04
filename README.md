@@ -1,6 +1,8 @@
 # Interview Scheduler
 
-![scheduler](https://github.com/ShuhaoZQGG/scheduler/blob/master/public/images/gif-container/scheduler-flow.gif)
+<p align="center">
+  <img src="https://github.com/ShuhaoZQGG/scheduler/blob/master/public/images/gif-container/scheduler-flow.gif" />
+</p>
 
 ## Setup
 
