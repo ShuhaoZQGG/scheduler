@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 export default function InterviewerList(props) {
   const {interviewers, onChange, value} = props;
+  // iterate over the interviewers to create a listItem for each interviewer
   const InterviewerListItems = interviewers.map((eachInterviewer) => 
       <InterviewerListItem 
         key = {eachInterviewer.id}

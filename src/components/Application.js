@@ -63,9 +63,8 @@ export default function Application(props) {
       />
       </section>
       <section className="schedule">
-        {/* <Button confirm = "hello" className = "button" onClick = {alert("hi")} dsiabled = "disabled"> Confirm</Button> */}
-        {/* Replace this with the schedule elements durint the "The Scheduler" activity. */}
         {appointmentListItems}
+        {/* Add a time 5pm to render the last Interview */}
         <Appointment 
             time="5pm"
         />

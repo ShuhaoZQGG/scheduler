@@ -1,3 +1,4 @@
+// Get Appointments Object for the given day
 export  function getAppointmentsForDay(state, day) {
   //... returns an array of appointments for that day
   const filteredDay = state.days.filter(user => user.name === day);
@@ -15,6 +16,7 @@ export  function getAppointmentsForDay(state, day) {
   return filteredAppointments;
 }
 
+// Get Interviewers Object for the given day
 export  function getInterviewersForDay(state, day) {
   //... returns an array of appointments for that day
   const filteredDay = state.days.filter(user => user.name === day);
@@ -38,6 +40,7 @@ export  function getInterviewersForDay(state, day) {
   return filtereInterviewers;
 }
 
+//Get an interview from api
 export  function getInterview(state, interview) {
   if (!interview) return null;
   let filteredInterview = {}

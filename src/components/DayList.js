@@ -2,7 +2,8 @@ import React from "react";
 import DayListItem from "./DayListItem";
 export default function DayList(props){
   const { days, value, onChange} = props;
-  const listItems = days.length >= 1 && days.map((day) => 
+  // Iterate days to display each day in DayListItem
+  const dayListItem = days.length >= 1 && days.map((day) => 
     <DayListItem 
         key={day.id}
         name={day.name} 
@@ -13,7 +14,7 @@ export default function DayList(props){
   )
   return (
     <ul>
-      {listItems}
+      {dayListItem}
     </ul>
   )
 }

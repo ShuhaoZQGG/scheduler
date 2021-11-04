@@ -28,7 +28,6 @@ export default function useApplicationData() {
       case SET_APPLICATION_DATA:
         return { ...state, days: action.days, appointments: action.appointments, interviewers: action.interviewers }
       case SET_INTERVIEW: {
-        console.log(action)
         return { ...state, id: action.id, interview: action.interiew }
       }
       case SET_SPOTS: {
