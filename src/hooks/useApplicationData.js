@@ -1,12 +1,11 @@
 import React, { useEffect, useReducer } from "react";
 import axios from "axios";
 import { actions } from "@storybook/addon-actions";
-
+import useApplicationData_2 from "./useApplicationData_2"
 const SET_DAY = "SET_DAY";
-
-  const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
-  const SET_INTERVIEW = "SET_INTERVIEW";
-  const SET_SPOTS = "SET_SPOTS";
+const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
+const SET_INTERVIEW = "SET_INTERVIEW";
+const SET_SPOTS = "SET_SPOTS";
 
 // Custom Hook to handle the states for scheduled interview
 export default function useApplicationData() {
@@ -28,7 +27,33 @@ export default function useApplicationData() {
       case SET_APPLICATION_DATA:
         return { ...state, days: action.days, appointments: action.appointments, interviewers: action.interviewers }
       case SET_INTERVIEW: {
-        return { ...state, id: action.id, interview: action.interiew }
+        
+        const appointment = {
+          ...state.appointments[action.id],
+          interview: action.interview && { ...action.interview }
+        };
+        
+        const appointments = {
+          ...state.appointments,
+          [action.id]: appointment
+        };
+
+        function spotsRemaininig(appointments) {
+          return state.days.map(eachDay => {
+            let spotsRemaininig = 0;
+            for (let id of eachDay.appointments) {
+              if (!appointments[id].interview) {
+                spotsRemaininig ++;
+              }
+            }
+      
+            return {...eachDay, spots: spotsRemaininig};
+          })
+        }
+
+        const days = spotsRemaininig(appointments);
+
+        return { ...state, appointments, days }
       }
       case SET_SPOTS: {
         return {...state, appointments: action.appointments, days: action.days}
@@ -42,6 +67,7 @@ export default function useApplicationData() {
   
   const setDay = day => dispatch({ type: SET_DAY, day });
 
+
   useEffect(() => {
     Promise.all([
       axios.get("http://localhost:8001/api/days"),
@@ -53,35 +79,36 @@ export default function useApplicationData() {
       const appointments = all[1].data;
       const interviewers = all[2].data;
       dispatch({type: SET_APPLICATION_DATA, days, appointments, interviewers})
-    }) 
-    
+    });
+
+    const socket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
+
+    socket.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      const id = data.id;
+      const interview = data.interview;
+       if (typeof data === "object" && data.type === "SET_INTERVIEW") {
+        dispatch({type: SET_INTERVIEW, id: id, interview: interview });
+       }
+    };
+
+    return () => socket.close();
   }, [])
 
+  // useApplicationData_2(dispatch);
+
+  
   // Calculate the remaining spots by interating over the days array and check how many
   // appointments.interview is NOT NULL for eachDay.
-  function spotsRemaininig(appointments) {
-    return state.days.map(eachDay => {
-      let spotsRemaininig = 0;
-      for (let id of eachDay.appointments) {
-        if (!appointments[id].interview) {
-          spotsRemaininig ++;
-        }
-      }
-
-      return {...eachDay, spots: spotsRemaininig};
-    })
-  }
 
   //function to setState when add a new interview
   function bookInterview(id, interview) {
-    console.log(id, interview);
 
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
     };
 
-    console.log(appointment);
 
     const appointments = {
       ...state.appointments,
@@ -93,31 +120,15 @@ export default function useApplicationData() {
     return axios.put(`http://localhost:8001/api/appointments/${id}`, appointments[id])
          .then((res) => {
            dispatch({ type: SET_INTERVIEW, id, interview });
-           dispatch({type: SET_SPOTS, appointments, days: spotsRemaininig(appointments)})
-           console.log(res);
          })
   }
 
-  function cancelInterview(id, interview) {
-    console.log(id, interview.interviewer.id);
-
-    const appointment = {
-      ...state.appointments[id],
-      interview: null
-    };
-
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment,
-    };
-    
+  function cancelInterview(id) {
 
     //Delete the API:id (set appointments.interview to be null) and setState
     return axios.delete(`http://localhost:8001/api/appointments/${id}`)
          .then((res) => {
-          dispatch({ type: SET_INTERVIEW, id, interview: null });
-          dispatch({type: SET_SPOTS, appointments, days: spotsRemaininig(appointments)})
-           console.log(res);
+          dispatch({ type: SET_INTERVIEW, id, interview: null});
          })
   }
 
