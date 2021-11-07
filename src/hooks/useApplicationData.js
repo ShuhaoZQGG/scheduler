@@ -80,6 +80,9 @@ export default function useApplicationData() {
       dispatch({type: SET_APPLICATION_DATA, days, appointments, interviewers})
     });
 
+  }, []);
+
+  useEffect(() => {
     const socket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
 
     socket.onmessage = (event) => {
@@ -92,8 +95,7 @@ export default function useApplicationData() {
     };
 
     return () => socket.close();
-  }, [])
-
+  }, [dispatch]);
   
   // Calculate the remaining spots by interating over the days array and check how many
   // appointments.interview is NOT NULL for eachDay.
