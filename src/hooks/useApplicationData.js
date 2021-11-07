@@ -114,7 +114,7 @@ export default function useApplicationData() {
 
 
     //Update the API:id and setState
-    return axios.put(`http://localhost:8001/api/appointments/${id}`, appointments[id])
+    return axios.put(`/api/appointments/${id}`, appointments[id])
          .then((res) => {
            dispatch({ type: SET_INTERVIEW, id, interview });
          })
@@ -123,7 +123,7 @@ export default function useApplicationData() {
   function cancelInterview(id) {
 
     //Delete the API:id (set appointments.interview to be null) and setState
-    return axios.delete(`http://localhost:8001/api/appointments/${id}`)
+    return axios.delete(`/api/appointments/${id}`)
          .then((res) => {
           dispatch({ type: SET_INTERVIEW, id, interview: null});
          })
