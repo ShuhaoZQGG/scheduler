@@ -1,7 +1,6 @@
 import React, { useEffect, useReducer } from "react";
 import axios from "axios";
 import { actions } from "@storybook/addon-actions";
-import useApplicationData_2 from "./useApplicationData_2"
 const SET_DAY = "SET_DAY";
 const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
 const SET_INTERVIEW = "SET_INTERVIEW";
@@ -70,9 +69,9 @@ export default function useApplicationData() {
 
   useEffect(() => {
     Promise.all([
-      axios.get("http://localhost:8001/api/days"),
-      axios.get("http://localhost:8001/api/appointments"),
-      axios.get("http://localhost:8001/api/interviewers")
+      axios.get("/api/days"),
+      axios.get("/api/appointments"),
+      axios.get("/api/interviewers")
     ]).then((all) => {
       setDay(state.day);
       const days = all[0].data;
@@ -94,8 +93,6 @@ export default function useApplicationData() {
 
     return () => socket.close();
   }, [])
-
-  // useApplicationData_2(dispatch);
 
   
   // Calculate the remaining spots by interating over the days array and check how many
