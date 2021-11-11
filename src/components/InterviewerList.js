@@ -8,11 +8,11 @@ export default function InterviewerList(props) {
   // iterate over the interviewers to create a listItem for each interviewer
   const InterviewerListItems = interviewers.map((eachInterviewer) => 
       <InterviewerListItem 
-        key = {eachInterviewer.id}
-        name = {eachInterviewer.name}
-        avatar = {eachInterviewer.avatar}
-        selected = {eachInterviewer.id === value}
-        setInterviewer = {() => {
+        key={eachInterviewer.id}
+        name={eachInterviewer.name}
+        avatar={eachInterviewer.avatar}
+        selected={eachInterviewer.id === value}
+        setInterviewer={() => {
           onChange(eachInterviewer.id)
           }}
       />
