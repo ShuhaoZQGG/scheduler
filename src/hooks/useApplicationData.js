@@ -1,10 +1,10 @@
 import React, { useEffect, useReducer } from "react";
 import axios from "axios";
-import { actions } from "@storybook/addon-actions";
-const SET_DAY = "SET_DAY";
-const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
-const SET_INTERVIEW = "SET_INTERVIEW";
-const SET_SPOTS = "SET_SPOTS";
+import reducer, {
+  SET_DAY,
+  SET_APPLICATION_DATA,
+  SET_INTERVIEW
+} from "reducers/application";
 
 // Custom Hook to handle the states for scheduled interview
 export default function useApplicationData() {
@@ -19,50 +19,7 @@ export default function useApplicationData() {
 
   
   // reducer function used for useReducer
-  function reducer(state, action) {
-    switch (action.type) {
-      case SET_DAY:
-        return { ...state, day: action.day }
-      case SET_APPLICATION_DATA:
-        return { ...state, days: action.days, appointments: action.appointments, interviewers: action.interviewers }
-      case SET_INTERVIEW: {
-        
-        const appointment = {
-          ...state.appointments[action.id],
-          interview: action.interview && { ...action.interview }
-        };
-        
-        const appointments = {
-          ...state.appointments,
-          [action.id]: appointment
-        };
-
-        function spotsRemaininig(appointments) {
-          return state.days.map(eachDay => {
-            let spotsRemaininig = 0;
-            for (let id of eachDay.appointments) {
-              if (!appointments[id].interview) {
-                spotsRemaininig ++;
-              }
-            }
-      
-            return {...eachDay, spots: spotsRemaininig};
-          })
-        }
-
-        const days = spotsRemaininig(appointments);
-
-        return { ...state, appointments, days }
-      }
-      case SET_SPOTS: {
-        return {...state, appointments: action.appointments, days: action.days}
-      }
-      default:
-        throw new Error(
-          `Tried to reduce with unsupported action type: ${action.type}`
-        );
-    }
-  }
+  
   
   const setDay = day => dispatch({ type: SET_DAY, day });
 
