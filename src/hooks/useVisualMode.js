@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 
 export default function useVisualMode(initial) {
-  const [mode, setMode] = useState([]);
+  const [mode, setMode] = useState();
   const [history, setHistory] = useState([]);
   
   useEffect(() => {
@@ -26,7 +26,7 @@ export default function useVisualMode(initial) {
     if (history.length >= 2) {
       let copyHistory = [...history];
       copyHistory.pop();
-      setHistory(prevState => ([...copyHistory]));
+      setHistory([...copyHistory]);
       return;
     }
   }
