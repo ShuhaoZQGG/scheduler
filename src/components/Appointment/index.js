@@ -20,20 +20,22 @@ export default function Appointment (props) {
   const EDIT = "EDIT";
   const ERROR_SAVE = "ERROR_SAVE";
   const ERROR_DELETE = "ERROR_DELETE"
+  
+  const { id, interview, interviewers, time, bookInterview, cancelInterview } = props; 
 
   const { mode, transition, back } = useVisualMode(
-    props.interview ? SHOW : EMPTY
+    interview ? SHOW : EMPTY
   );
 
   function save(name, interviewer) {
-    const interview = {
+    const interview_save = {
       student: name,
       interviewer
     };
     
     transition(SAVING);
 
-    props.bookInterview(props.id, interview)
+    bookInterview(id, interview_save)
          .then(()=>transition(SHOW))
          .catch(err =>{
            console.log(err);
@@ -45,7 +47,7 @@ export default function Appointment (props) {
   function onDelete() {        
     transition(DELETING, true);
 
-    props.cancelInterview(props.id, props.interview)
+    cancelInterview(id, interview)
          .then(() => transition(EMPTY))
          .catch(err => {
            console.log(err);
@@ -54,27 +56,27 @@ export default function Appointment (props) {
   }
   
   useEffect(() => {
-    if (props.interview && mode === EMPTY) {
+    if (interview && mode === EMPTY) {
      transition(SHOW);
     }
-    if (props.interview === null && mode === SHOW) {
+    if (interview === null && mode === SHOW) {
      transition(EMPTY);
     }
-   }, [props.interview, transition, mode]);
+   }, [interview, transition, mode]);
 
   return (
     <article className="appointment" data-testid = "appointment">
-    <Header time = {props.time}/>
+    <Header time = {time}/>
     {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
-    {mode === SHOW && props.interview && (
+    {mode === SHOW && interview && (
      <Show
-       student={props.interview.student}
-       interviewer={props.interview.interviewer}
+       student={interview.student}
+       interviewer={interview.interviewer}
        onDelete={() => transition(CONFIRM)}
        onEdit={() => transition(EDIT)}
     />
     )} 
-    {mode === CREATE && <Form interviewers = {props.interviewers} onCancel={back} 
+    {mode === CREATE && <Form interviewers = {interviewers} onCancel={back} 
       onSave = {save}
     />}
     
@@ -83,9 +85,9 @@ export default function Appointment (props) {
     {mode === CONFIRM && <Confirm message="Are you sure to cancel the interview?" onCancel={back} onConfirm={onDelete}/>}
     {mode === EDIT && 
     <Form 
-      student={props.interview.student}
-      interviewer={props.interview.interviewer.id}
-      interviewers={props.interviewers} 
+      student={interview.student}
+      interviewer={interview.interviewer.id}
+      interviewers={interviewers} 
       onCancel={back} 
       onSave={save}
     />}

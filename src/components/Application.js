@@ -9,7 +9,7 @@ import useApplicationData from "../hooks/useApplicationData"
 // const dailyAppointments = [];
 
 
-export default function Application(props) {
+export default function Application() {
   const {
     state,
     setDay,
