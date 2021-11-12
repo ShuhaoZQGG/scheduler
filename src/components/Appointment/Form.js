@@ -43,17 +43,17 @@ export default function Form(props) {
         name={student}
         type="text"
         placeholder="Enter Student Name"
-        value = {student}
-        interviewer = {interviewer}
+        value={student}
+        interviewer={interviewer}
         onChange={(event) => setStudent(event.target.value)}
         data-testid="student-name-input"      
         />
       <section className="appointment__validation">{error}</section>
     </form>
     <InterviewerList 
-      interviewers = {interviewers}
-      value = {interviewer}
-      onChange = {(id) => setInterviewer(id)}
+      interviewers={interviewers}
+      value={interviewer}
+      onChange={(id) => setInterviewer(id)}
       /* your code goes here */
     />
   </section>
