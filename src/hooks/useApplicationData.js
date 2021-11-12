@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import axios from "axios";
 import reducer, {
   SET_DAY,
@@ -37,7 +37,7 @@ export default function useApplicationData() {
       dispatch({type: SET_APPLICATION_DATA, days, appointments, interviewers})
     });
 
-  }, []);
+  }, [state.day]);
 
   useEffect(() => {
     const socket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import {useState, useEffect} from "react";
 
 export default function useVisualMode(initial) {
   const [mode, setMode] = useState();
@@ -7,7 +7,7 @@ export default function useVisualMode(initial) {
   useEffect(() => {
     setMode(initial);
     setHistory([initial]);
-  }, []);
+  }, [initial]);
 
   useEffect(() => {
     setMode(history[history.length -1]);

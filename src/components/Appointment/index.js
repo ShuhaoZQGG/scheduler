@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect} from "react";
+import React, { useEffect} from "react";
 import Header from "./Header"
 import Empty from "./Empty";
 import Show from "./Show";
@@ -7,7 +7,6 @@ import Status from "./Status";
 import Error from "./Error";
 import Form from "./Form";
 import useVisualMode from "hooks/useVisualMode";
-import axios from "axios";
 
 import "./style.scss";
 
